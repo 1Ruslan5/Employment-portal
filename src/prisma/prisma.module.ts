@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { PostgreSqlPrismaService } from "@app/prisma/prisma.postgres.service";
+import { PostgreSqlPrismaService } from "@app/";
 
 
 @Module({
