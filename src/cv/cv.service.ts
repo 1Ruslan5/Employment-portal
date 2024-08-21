@@ -8,7 +8,6 @@ import { UpdateCvDto } from "./dto/updateCv.dto";
 @Injectable()
 export class CvService {
   constructor(private cvRepository: CvRepository) {}
-
   async createCv(submitterId: number, createCvDto: CreateCvDto): Promise<CvEntity> {
     const cvClean = this.prepareCvCreateObject(createCvDto);
 
