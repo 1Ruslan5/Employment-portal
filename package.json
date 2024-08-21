@@ -18,9 +18,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "create:db": "docker-compose -f docker/db/docker-compose.yml up -d",
     "delete:db": "docker-compose -f docker/db/docker-compose.yml down",
-    "db:up": "npx prisma migrate dev --name schemaPostgres --schema prisma/Postgres/schema.prisma && npx prisma db push --schema prisma/Mongo/schema.prisma",
+    "db:up": "npx prisma migrate dev --name schemaPostgres --schema prisma/Postgres/schema.prisma",
     "db:drop": "npx prisma migrate reset --schema prisma/Postgres/schema.prisma",
-    "generate": "npx prisma generate --schema=prisma/Postgres/schema.prisma && npx prisma generate --schema=prisma/Mongo/schema.prisma"
+    "generate": "npx prisma generate --schema=prisma/Postgres/schema.prisma"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

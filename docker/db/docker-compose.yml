@@ -10,14 +10,4 @@ services:
       - POSTGRES_PASSWORD=123456Sr
     ports:
       - "5500:5432"
-  mongo:
-    build: ../mongodb_rs
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: 123456Sr
-      MONGO_INITDB_DATABASE: mongo
-      MONGO_REPLICA_HOST: localhost
-      MONGO_REPLICA_PORT: 27017
-    ports:
-      - "27017:27017"
+

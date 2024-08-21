@@ -23,6 +23,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  * 
  */
 export type Task = $Result.DefaultSelection<Prisma.$TaskPayload>
+/**
+ * Model Cv
+ * 
+ */
+export type Cv = $Result.DefaultSelection<Prisma.$CvPayload>
 
 /**
  * Enums
@@ -182,6 +187,16 @@ export class PrismaClient<
     * ```
     */
   get task(): Prisma.TaskDelegate<ExtArgs>;
+
+  /**
+   * `prisma.cv`: Exposes CRUD operations for the **Cv** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Cvs
+    * const cvs = await prisma.cv.findMany()
+    * ```
+    */
+  get cv(): Prisma.CvDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -660,7 +675,8 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
-    Task: 'Task'
+    Task: 'Task',
+    Cv: 'Cv'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -676,7 +692,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "task"
+      modelProps: "user" | "task" | "cv"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -817,6 +833,76 @@ export namespace Prisma {
           count: {
             args: Prisma.TaskCountArgs<ExtArgs>
             result: $Utils.Optional<TaskCountAggregateOutputType> | number
+          }
+        }
+      }
+      Cv: {
+        payload: Prisma.$CvPayload<ExtArgs>
+        fields: Prisma.CvFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CvFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CvFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvPayload>
+          }
+          findFirst: {
+            args: Prisma.CvFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CvFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvPayload>
+          }
+          findMany: {
+            args: Prisma.CvFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvPayload>[]
+          }
+          create: {
+            args: Prisma.CvCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvPayload>
+          }
+          createMany: {
+            args: Prisma.CvCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CvCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvPayload>[]
+          }
+          delete: {
+            args: Prisma.CvDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvPayload>
+          }
+          update: {
+            args: Prisma.CvUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvPayload>
+          }
+          deleteMany: {
+            args: Prisma.CvDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CvUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.CvUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CvPayload>
+          }
+          aggregate: {
+            args: Prisma.CvAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCv>
+          }
+          groupBy: {
+            args: Prisma.CvGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CvGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CvCountArgs<ExtArgs>
+            result: $Utils.Optional<CvCountAggregateOutputType> | number
           }
         }
       }
@@ -983,11 +1069,13 @@ export namespace Prisma {
   export type UserCountOutputType = {
     tasks: number
     assignedTasks: number
+    cvs: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tasks?: boolean | UserCountOutputTypeCountTasksArgs
     assignedTasks?: boolean | UserCountOutputTypeCountAssignedTasksArgs
+    cvs?: boolean | UserCountOutputTypeCountCvsArgs
   }
 
   // Custom InputTypes
@@ -1013,6 +1101,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountAssignedTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TaskWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCvsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CvWhereInput
   }
 
 
@@ -1212,6 +1307,7 @@ export namespace Prisma {
     role?: boolean
     tasks?: boolean | User$tasksArgs<ExtArgs>
     assignedTasks?: boolean | User$assignedTasksArgs<ExtArgs>
+    cvs?: boolean | User$cvsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1232,6 +1328,7 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tasks?: boolean | User$tasksArgs<ExtArgs>
     assignedTasks?: boolean | User$assignedTasksArgs<ExtArgs>
+    cvs?: boolean | User$cvsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1241,6 +1338,7 @@ export namespace Prisma {
     objects: {
       tasks: Prisma.$TaskPayload<ExtArgs>[]
       assignedTasks: Prisma.$TaskPayload<ExtArgs>[]
+      cvs: Prisma.$CvPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -1613,6 +1711,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     tasks<T extends User$tasksArgs<ExtArgs> = {}>(args?: Subset<T, User$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany"> | Null>
     assignedTasks<T extends User$assignedTasksArgs<ExtArgs> = {}>(args?: Subset<T, User$assignedTasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany"> | Null>
+    cvs<T extends User$cvsArgs<ExtArgs> = {}>(args?: Subset<T, User$cvsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CvPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1997,6 +2096,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+  }
+
+  /**
+   * User.cvs
+   */
+  export type User$cvsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cv
+     */
+    select?: CvSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvInclude<ExtArgs> | null
+    where?: CvWhereInput
+    orderBy?: CvOrderByWithRelationInput | CvOrderByWithRelationInput[]
+    cursor?: CvWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CvScalarFieldEnum | CvScalarFieldEnum[]
   }
 
   /**
@@ -3032,6 +3151,1049 @@ export namespace Prisma {
 
 
   /**
+   * Model Cv
+   */
+
+  export type AggregateCv = {
+    _count: CvCountAggregateOutputType | null
+    _avg: CvAvgAggregateOutputType | null
+    _sum: CvSumAggregateOutputType | null
+    _min: CvMinAggregateOutputType | null
+    _max: CvMaxAggregateOutputType | null
+  }
+
+  export type CvAvgAggregateOutputType = {
+    id: number | null
+    submitterId: number | null
+  }
+
+  export type CvSumAggregateOutputType = {
+    id: number | null
+    submitterId: number | null
+  }
+
+  export type CvMinAggregateOutputType = {
+    id: number | null
+    position: string | null
+    full_name: string | null
+    email: string | null
+    phone_numbers: string | null
+    about_your_self: string | null
+    skills: string | null
+    experience: string | null
+    languages: string | null
+    projects: string | null
+    submitterId: number | null
+  }
+
+  export type CvMaxAggregateOutputType = {
+    id: number | null
+    position: string | null
+    full_name: string | null
+    email: string | null
+    phone_numbers: string | null
+    about_your_self: string | null
+    skills: string | null
+    experience: string | null
+    languages: string | null
+    projects: string | null
+    submitterId: number | null
+  }
+
+  export type CvCountAggregateOutputType = {
+    id: number
+    position: number
+    full_name: number
+    email: number
+    phone_numbers: number
+    about_your_self: number
+    skills: number
+    experience: number
+    languages: number
+    projects: number
+    submitterId: number
+    _all: number
+  }
+
+
+  export type CvAvgAggregateInputType = {
+    id?: true
+    submitterId?: true
+  }
+
+  export type CvSumAggregateInputType = {
+    id?: true
+    submitterId?: true
+  }
+
+  export type CvMinAggregateInputType = {
+    id?: true
+    position?: true
+    full_name?: true
+    email?: true
+    phone_numbers?: true
+    about_your_self?: true
+    skills?: true
+    experience?: true
+    languages?: true
+    projects?: true
+    submitterId?: true
+  }
+
+  export type CvMaxAggregateInputType = {
+    id?: true
+    position?: true
+    full_name?: true
+    email?: true
+    phone_numbers?: true
+    about_your_self?: true
+    skills?: true
+    experience?: true
+    languages?: true
+    projects?: true
+    submitterId?: true
+  }
+
+  export type CvCountAggregateInputType = {
+    id?: true
+    position?: true
+    full_name?: true
+    email?: true
+    phone_numbers?: true
+    about_your_self?: true
+    skills?: true
+    experience?: true
+    languages?: true
+    projects?: true
+    submitterId?: true
+    _all?: true
+  }
+
+  export type CvAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Cv to aggregate.
+     */
+    where?: CvWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cvs to fetch.
+     */
+    orderBy?: CvOrderByWithRelationInput | CvOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CvWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cvs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cvs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Cvs
+    **/
+    _count?: true | CvCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CvAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CvSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CvMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CvMaxAggregateInputType
+  }
+
+  export type GetCvAggregateType<T extends CvAggregateArgs> = {
+        [P in keyof T & keyof AggregateCv]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCv[P]>
+      : GetScalarType<T[P], AggregateCv[P]>
+  }
+
+
+
+
+  export type CvGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CvWhereInput
+    orderBy?: CvOrderByWithAggregationInput | CvOrderByWithAggregationInput[]
+    by: CvScalarFieldEnum[] | CvScalarFieldEnum
+    having?: CvScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CvCountAggregateInputType | true
+    _avg?: CvAvgAggregateInputType
+    _sum?: CvSumAggregateInputType
+    _min?: CvMinAggregateInputType
+    _max?: CvMaxAggregateInputType
+  }
+
+  export type CvGroupByOutputType = {
+    id: number
+    position: string
+    full_name: string
+    email: string
+    phone_numbers: string | null
+    about_your_self: string | null
+    skills: string
+    experience: string | null
+    languages: string
+    projects: string | null
+    submitterId: number
+    _count: CvCountAggregateOutputType | null
+    _avg: CvAvgAggregateOutputType | null
+    _sum: CvSumAggregateOutputType | null
+    _min: CvMinAggregateOutputType | null
+    _max: CvMaxAggregateOutputType | null
+  }
+
+  type GetCvGroupByPayload<T extends CvGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CvGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CvGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CvGroupByOutputType[P]>
+            : GetScalarType<T[P], CvGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CvSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    position?: boolean
+    full_name?: boolean
+    email?: boolean
+    phone_numbers?: boolean
+    about_your_self?: boolean
+    skills?: boolean
+    experience?: boolean
+    languages?: boolean
+    projects?: boolean
+    submitterId?: boolean
+    submitter?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cv"]>
+
+  export type CvSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    position?: boolean
+    full_name?: boolean
+    email?: boolean
+    phone_numbers?: boolean
+    about_your_self?: boolean
+    skills?: boolean
+    experience?: boolean
+    languages?: boolean
+    projects?: boolean
+    submitterId?: boolean
+    submitter?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cv"]>
+
+  export type CvSelectScalar = {
+    id?: boolean
+    position?: boolean
+    full_name?: boolean
+    email?: boolean
+    phone_numbers?: boolean
+    about_your_self?: boolean
+    skills?: boolean
+    experience?: boolean
+    languages?: boolean
+    projects?: boolean
+    submitterId?: boolean
+  }
+
+  export type CvInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submitter?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CvIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submitter?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $CvPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Cv"
+    objects: {
+      submitter: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      position: string
+      full_name: string
+      email: string
+      phone_numbers: string | null
+      about_your_self: string | null
+      skills: string
+      experience: string | null
+      languages: string
+      projects: string | null
+      submitterId: number
+    }, ExtArgs["result"]["cv"]>
+    composites: {}
+  }
+
+  type CvGetPayload<S extends boolean | null | undefined | CvDefaultArgs> = $Result.GetResult<Prisma.$CvPayload, S>
+
+  type CvCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<CvFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: CvCountAggregateInputType | true
+    }
+
+  export interface CvDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Cv'], meta: { name: 'Cv' } }
+    /**
+     * Find zero or one Cv that matches the filter.
+     * @param {CvFindUniqueArgs} args - Arguments to find a Cv
+     * @example
+     * // Get one Cv
+     * const cv = await prisma.cv.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CvFindUniqueArgs>(args: SelectSubset<T, CvFindUniqueArgs<ExtArgs>>): Prisma__CvClient<$Result.GetResult<Prisma.$CvPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Cv that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {CvFindUniqueOrThrowArgs} args - Arguments to find a Cv
+     * @example
+     * // Get one Cv
+     * const cv = await prisma.cv.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CvFindUniqueOrThrowArgs>(args: SelectSubset<T, CvFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CvClient<$Result.GetResult<Prisma.$CvPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Cv that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvFindFirstArgs} args - Arguments to find a Cv
+     * @example
+     * // Get one Cv
+     * const cv = await prisma.cv.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CvFindFirstArgs>(args?: SelectSubset<T, CvFindFirstArgs<ExtArgs>>): Prisma__CvClient<$Result.GetResult<Prisma.$CvPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Cv that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvFindFirstOrThrowArgs} args - Arguments to find a Cv
+     * @example
+     * // Get one Cv
+     * const cv = await prisma.cv.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CvFindFirstOrThrowArgs>(args?: SelectSubset<T, CvFindFirstOrThrowArgs<ExtArgs>>): Prisma__CvClient<$Result.GetResult<Prisma.$CvPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Cvs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Cvs
+     * const cvs = await prisma.cv.findMany()
+     * 
+     * // Get first 10 Cvs
+     * const cvs = await prisma.cv.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cvWithIdOnly = await prisma.cv.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CvFindManyArgs>(args?: SelectSubset<T, CvFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CvPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Cv.
+     * @param {CvCreateArgs} args - Arguments to create a Cv.
+     * @example
+     * // Create one Cv
+     * const Cv = await prisma.cv.create({
+     *   data: {
+     *     // ... data to create a Cv
+     *   }
+     * })
+     * 
+     */
+    create<T extends CvCreateArgs>(args: SelectSubset<T, CvCreateArgs<ExtArgs>>): Prisma__CvClient<$Result.GetResult<Prisma.$CvPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Cvs.
+     * @param {CvCreateManyArgs} args - Arguments to create many Cvs.
+     * @example
+     * // Create many Cvs
+     * const cv = await prisma.cv.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CvCreateManyArgs>(args?: SelectSubset<T, CvCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Cvs and returns the data saved in the database.
+     * @param {CvCreateManyAndReturnArgs} args - Arguments to create many Cvs.
+     * @example
+     * // Create many Cvs
+     * const cv = await prisma.cv.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Cvs and only return the `id`
+     * const cvWithIdOnly = await prisma.cv.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CvCreateManyAndReturnArgs>(args?: SelectSubset<T, CvCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CvPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Cv.
+     * @param {CvDeleteArgs} args - Arguments to delete one Cv.
+     * @example
+     * // Delete one Cv
+     * const Cv = await prisma.cv.delete({
+     *   where: {
+     *     // ... filter to delete one Cv
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CvDeleteArgs>(args: SelectSubset<T, CvDeleteArgs<ExtArgs>>): Prisma__CvClient<$Result.GetResult<Prisma.$CvPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Cv.
+     * @param {CvUpdateArgs} args - Arguments to update one Cv.
+     * @example
+     * // Update one Cv
+     * const cv = await prisma.cv.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CvUpdateArgs>(args: SelectSubset<T, CvUpdateArgs<ExtArgs>>): Prisma__CvClient<$Result.GetResult<Prisma.$CvPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Cvs.
+     * @param {CvDeleteManyArgs} args - Arguments to filter Cvs to delete.
+     * @example
+     * // Delete a few Cvs
+     * const { count } = await prisma.cv.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CvDeleteManyArgs>(args?: SelectSubset<T, CvDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Cvs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Cvs
+     * const cv = await prisma.cv.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CvUpdateManyArgs>(args: SelectSubset<T, CvUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Cv.
+     * @param {CvUpsertArgs} args - Arguments to update or create a Cv.
+     * @example
+     * // Update or create a Cv
+     * const cv = await prisma.cv.upsert({
+     *   create: {
+     *     // ... data to create a Cv
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Cv we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CvUpsertArgs>(args: SelectSubset<T, CvUpsertArgs<ExtArgs>>): Prisma__CvClient<$Result.GetResult<Prisma.$CvPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Cvs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvCountArgs} args - Arguments to filter Cvs to count.
+     * @example
+     * // Count the number of Cvs
+     * const count = await prisma.cv.count({
+     *   where: {
+     *     // ... the filter for the Cvs we want to count
+     *   }
+     * })
+    **/
+    count<T extends CvCountArgs>(
+      args?: Subset<T, CvCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CvCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Cv.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CvAggregateArgs>(args: Subset<T, CvAggregateArgs>): Prisma.PrismaPromise<GetCvAggregateType<T>>
+
+    /**
+     * Group by Cv.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CvGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CvGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CvGroupByArgs['orderBy'] }
+        : { orderBy?: CvGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CvGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCvGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Cv model
+   */
+  readonly fields: CvFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Cv.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CvClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    submitter<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Cv model
+   */ 
+  interface CvFieldRefs {
+    readonly id: FieldRef<"Cv", 'Int'>
+    readonly position: FieldRef<"Cv", 'String'>
+    readonly full_name: FieldRef<"Cv", 'String'>
+    readonly email: FieldRef<"Cv", 'String'>
+    readonly phone_numbers: FieldRef<"Cv", 'String'>
+    readonly about_your_self: FieldRef<"Cv", 'String'>
+    readonly skills: FieldRef<"Cv", 'String'>
+    readonly experience: FieldRef<"Cv", 'String'>
+    readonly languages: FieldRef<"Cv", 'String'>
+    readonly projects: FieldRef<"Cv", 'String'>
+    readonly submitterId: FieldRef<"Cv", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Cv findUnique
+   */
+  export type CvFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cv
+     */
+    select?: CvSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvInclude<ExtArgs> | null
+    /**
+     * Filter, which Cv to fetch.
+     */
+    where: CvWhereUniqueInput
+  }
+
+  /**
+   * Cv findUniqueOrThrow
+   */
+  export type CvFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cv
+     */
+    select?: CvSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvInclude<ExtArgs> | null
+    /**
+     * Filter, which Cv to fetch.
+     */
+    where: CvWhereUniqueInput
+  }
+
+  /**
+   * Cv findFirst
+   */
+  export type CvFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cv
+     */
+    select?: CvSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvInclude<ExtArgs> | null
+    /**
+     * Filter, which Cv to fetch.
+     */
+    where?: CvWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cvs to fetch.
+     */
+    orderBy?: CvOrderByWithRelationInput | CvOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Cvs.
+     */
+    cursor?: CvWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cvs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cvs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cvs.
+     */
+    distinct?: CvScalarFieldEnum | CvScalarFieldEnum[]
+  }
+
+  /**
+   * Cv findFirstOrThrow
+   */
+  export type CvFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cv
+     */
+    select?: CvSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvInclude<ExtArgs> | null
+    /**
+     * Filter, which Cv to fetch.
+     */
+    where?: CvWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cvs to fetch.
+     */
+    orderBy?: CvOrderByWithRelationInput | CvOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Cvs.
+     */
+    cursor?: CvWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cvs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cvs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cvs.
+     */
+    distinct?: CvScalarFieldEnum | CvScalarFieldEnum[]
+  }
+
+  /**
+   * Cv findMany
+   */
+  export type CvFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cv
+     */
+    select?: CvSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvInclude<ExtArgs> | null
+    /**
+     * Filter, which Cvs to fetch.
+     */
+    where?: CvWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cvs to fetch.
+     */
+    orderBy?: CvOrderByWithRelationInput | CvOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Cvs.
+     */
+    cursor?: CvWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cvs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cvs.
+     */
+    skip?: number
+    distinct?: CvScalarFieldEnum | CvScalarFieldEnum[]
+  }
+
+  /**
+   * Cv create
+   */
+  export type CvCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cv
+     */
+    select?: CvSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Cv.
+     */
+    data: XOR<CvCreateInput, CvUncheckedCreateInput>
+  }
+
+  /**
+   * Cv createMany
+   */
+  export type CvCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Cvs.
+     */
+    data: CvCreateManyInput | CvCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Cv createManyAndReturn
+   */
+  export type CvCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cv
+     */
+    select?: CvSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Cvs.
+     */
+    data: CvCreateManyInput | CvCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Cv update
+   */
+  export type CvUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cv
+     */
+    select?: CvSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Cv.
+     */
+    data: XOR<CvUpdateInput, CvUncheckedUpdateInput>
+    /**
+     * Choose, which Cv to update.
+     */
+    where: CvWhereUniqueInput
+  }
+
+  /**
+   * Cv updateMany
+   */
+  export type CvUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Cvs.
+     */
+    data: XOR<CvUpdateManyMutationInput, CvUncheckedUpdateManyInput>
+    /**
+     * Filter which Cvs to update
+     */
+    where?: CvWhereInput
+  }
+
+  /**
+   * Cv upsert
+   */
+  export type CvUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cv
+     */
+    select?: CvSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Cv to update in case it exists.
+     */
+    where: CvWhereUniqueInput
+    /**
+     * In case the Cv found by the `where` argument doesn't exist, create a new Cv with this data.
+     */
+    create: XOR<CvCreateInput, CvUncheckedCreateInput>
+    /**
+     * In case the Cv was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CvUpdateInput, CvUncheckedUpdateInput>
+  }
+
+  /**
+   * Cv delete
+   */
+  export type CvDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cv
+     */
+    select?: CvSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvInclude<ExtArgs> | null
+    /**
+     * Filter which Cv to delete.
+     */
+    where: CvWhereUniqueInput
+  }
+
+  /**
+   * Cv deleteMany
+   */
+  export type CvDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Cvs to delete
+     */
+    where?: CvWhereInput
+  }
+
+  /**
+   * Cv without action
+   */
+  export type CvDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cv
+     */
+    select?: CvSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CvInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -3069,6 +4231,23 @@ export namespace Prisma {
   export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
 
 
+  export const CvScalarFieldEnum: {
+    id: 'id',
+    position: 'position',
+    full_name: 'full_name',
+    email: 'email',
+    phone_numbers: 'phone_numbers',
+    about_your_self: 'about_your_self',
+    skills: 'skills',
+    experience: 'experience',
+    languages: 'languages',
+    projects: 'projects',
+    submitterId: 'submitterId'
+  };
+
+  export type CvScalarFieldEnum = (typeof CvScalarFieldEnum)[keyof typeof CvScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -3083,6 +4262,14 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -3180,6 +4367,7 @@ export namespace Prisma {
     role?: EnumUserRolesFilter<"User"> | $Enums.UserRoles
     tasks?: TaskListRelationFilter
     assignedTasks?: TaskListRelationFilter
+    cvs?: CvListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -3189,6 +4377,7 @@ export namespace Prisma {
     role?: SortOrder
     tasks?: TaskOrderByRelationAggregateInput
     assignedTasks?: TaskOrderByRelationAggregateInput
+    cvs?: CvOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -3201,6 +4390,7 @@ export namespace Prisma {
     role?: EnumUserRolesFilter<"User"> | $Enums.UserRoles
     tasks?: TaskListRelationFilter
     assignedTasks?: TaskListRelationFilter
+    cvs?: CvListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -3300,12 +4490,100 @@ export namespace Prisma {
     customerId?: IntWithAggregatesFilter<"Task"> | number
   }
 
+  export type CvWhereInput = {
+    AND?: CvWhereInput | CvWhereInput[]
+    OR?: CvWhereInput[]
+    NOT?: CvWhereInput | CvWhereInput[]
+    id?: IntFilter<"Cv"> | number
+    position?: StringFilter<"Cv"> | string
+    full_name?: StringFilter<"Cv"> | string
+    email?: StringFilter<"Cv"> | string
+    phone_numbers?: StringNullableFilter<"Cv"> | string | null
+    about_your_self?: StringNullableFilter<"Cv"> | string | null
+    skills?: StringFilter<"Cv"> | string
+    experience?: StringNullableFilter<"Cv"> | string | null
+    languages?: StringFilter<"Cv"> | string
+    projects?: StringNullableFilter<"Cv"> | string | null
+    submitterId?: IntFilter<"Cv"> | number
+    submitter?: XOR<UserRelationFilter, UserWhereInput>
+  }
+
+  export type CvOrderByWithRelationInput = {
+    id?: SortOrder
+    position?: SortOrder
+    full_name?: SortOrder
+    email?: SortOrder
+    phone_numbers?: SortOrderInput | SortOrder
+    about_your_self?: SortOrderInput | SortOrder
+    skills?: SortOrder
+    experience?: SortOrderInput | SortOrder
+    languages?: SortOrder
+    projects?: SortOrderInput | SortOrder
+    submitterId?: SortOrder
+    submitter?: UserOrderByWithRelationInput
+  }
+
+  export type CvWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: CvWhereInput | CvWhereInput[]
+    OR?: CvWhereInput[]
+    NOT?: CvWhereInput | CvWhereInput[]
+    position?: StringFilter<"Cv"> | string
+    full_name?: StringFilter<"Cv"> | string
+    email?: StringFilter<"Cv"> | string
+    phone_numbers?: StringNullableFilter<"Cv"> | string | null
+    about_your_self?: StringNullableFilter<"Cv"> | string | null
+    skills?: StringFilter<"Cv"> | string
+    experience?: StringNullableFilter<"Cv"> | string | null
+    languages?: StringFilter<"Cv"> | string
+    projects?: StringNullableFilter<"Cv"> | string | null
+    submitterId?: IntFilter<"Cv"> | number
+    submitter?: XOR<UserRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type CvOrderByWithAggregationInput = {
+    id?: SortOrder
+    position?: SortOrder
+    full_name?: SortOrder
+    email?: SortOrder
+    phone_numbers?: SortOrderInput | SortOrder
+    about_your_self?: SortOrderInput | SortOrder
+    skills?: SortOrder
+    experience?: SortOrderInput | SortOrder
+    languages?: SortOrder
+    projects?: SortOrderInput | SortOrder
+    submitterId?: SortOrder
+    _count?: CvCountOrderByAggregateInput
+    _avg?: CvAvgOrderByAggregateInput
+    _max?: CvMaxOrderByAggregateInput
+    _min?: CvMinOrderByAggregateInput
+    _sum?: CvSumOrderByAggregateInput
+  }
+
+  export type CvScalarWhereWithAggregatesInput = {
+    AND?: CvScalarWhereWithAggregatesInput | CvScalarWhereWithAggregatesInput[]
+    OR?: CvScalarWhereWithAggregatesInput[]
+    NOT?: CvScalarWhereWithAggregatesInput | CvScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Cv"> | number
+    position?: StringWithAggregatesFilter<"Cv"> | string
+    full_name?: StringWithAggregatesFilter<"Cv"> | string
+    email?: StringWithAggregatesFilter<"Cv"> | string
+    phone_numbers?: StringNullableWithAggregatesFilter<"Cv"> | string | null
+    about_your_self?: StringNullableWithAggregatesFilter<"Cv"> | string | null
+    skills?: StringWithAggregatesFilter<"Cv"> | string
+    experience?: StringNullableWithAggregatesFilter<"Cv"> | string | null
+    languages?: StringWithAggregatesFilter<"Cv"> | string
+    projects?: StringNullableWithAggregatesFilter<"Cv"> | string | null
+    submitterId?: IntWithAggregatesFilter<"Cv"> | number
+  }
+
   export type UserCreateInput = {
     email: string
     password: string
     role: $Enums.UserRoles
     tasks?: TaskCreateNestedManyWithoutSubmitterInput
     assignedTasks?: TaskCreateNestedManyWithoutCustomerInput
+    cvs?: CvCreateNestedManyWithoutSubmitterInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -3315,6 +4593,7 @@ export namespace Prisma {
     role: $Enums.UserRoles
     tasks?: TaskUncheckedCreateNestedManyWithoutSubmitterInput
     assignedTasks?: TaskUncheckedCreateNestedManyWithoutCustomerInput
+    cvs?: CvUncheckedCreateNestedManyWithoutSubmitterInput
   }
 
   export type UserUpdateInput = {
@@ -3323,6 +4602,7 @@ export namespace Prisma {
     role?: EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
     tasks?: TaskUpdateManyWithoutSubmitterNestedInput
     assignedTasks?: TaskUpdateManyWithoutCustomerNestedInput
+    cvs?: CvUpdateManyWithoutSubmitterNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -3332,6 +4612,7 @@ export namespace Prisma {
     role?: EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
     tasks?: TaskUncheckedUpdateManyWithoutSubmitterNestedInput
     assignedTasks?: TaskUncheckedUpdateManyWithoutCustomerNestedInput
+    cvs?: CvUncheckedUpdateManyWithoutSubmitterNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -3426,6 +4707,100 @@ export namespace Prisma {
     customerId?: IntFieldUpdateOperationsInput | number
   }
 
+  export type CvCreateInput = {
+    position: string
+    full_name: string
+    email: string
+    phone_numbers?: string | null
+    about_your_self?: string | null
+    skills: string
+    experience?: string | null
+    languages: string
+    projects?: string | null
+    submitter: UserCreateNestedOneWithoutCvsInput
+  }
+
+  export type CvUncheckedCreateInput = {
+    id?: number
+    position: string
+    full_name: string
+    email: string
+    phone_numbers?: string | null
+    about_your_self?: string | null
+    skills: string
+    experience?: string | null
+    languages: string
+    projects?: string | null
+    submitterId: number
+  }
+
+  export type CvUpdateInput = {
+    position?: StringFieldUpdateOperationsInput | string
+    full_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone_numbers?: NullableStringFieldUpdateOperationsInput | string | null
+    about_your_self?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: StringFieldUpdateOperationsInput | string
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    languages?: StringFieldUpdateOperationsInput | string
+    projects?: NullableStringFieldUpdateOperationsInput | string | null
+    submitter?: UserUpdateOneRequiredWithoutCvsNestedInput
+  }
+
+  export type CvUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    position?: StringFieldUpdateOperationsInput | string
+    full_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone_numbers?: NullableStringFieldUpdateOperationsInput | string | null
+    about_your_self?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: StringFieldUpdateOperationsInput | string
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    languages?: StringFieldUpdateOperationsInput | string
+    projects?: NullableStringFieldUpdateOperationsInput | string | null
+    submitterId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type CvCreateManyInput = {
+    id?: number
+    position: string
+    full_name: string
+    email: string
+    phone_numbers?: string | null
+    about_your_self?: string | null
+    skills: string
+    experience?: string | null
+    languages: string
+    projects?: string | null
+    submitterId: number
+  }
+
+  export type CvUpdateManyMutationInput = {
+    position?: StringFieldUpdateOperationsInput | string
+    full_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone_numbers?: NullableStringFieldUpdateOperationsInput | string | null
+    about_your_self?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: StringFieldUpdateOperationsInput | string
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    languages?: StringFieldUpdateOperationsInput | string
+    projects?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CvUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    position?: StringFieldUpdateOperationsInput | string
+    full_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone_numbers?: NullableStringFieldUpdateOperationsInput | string | null
+    about_your_self?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: StringFieldUpdateOperationsInput | string
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    languages?: StringFieldUpdateOperationsInput | string
+    projects?: NullableStringFieldUpdateOperationsInput | string | null
+    submitterId?: IntFieldUpdateOperationsInput | number
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -3465,7 +4840,17 @@ export namespace Prisma {
     none?: TaskWhereInput
   }
 
+  export type CvListRelationFilter = {
+    every?: CvWhereInput
+    some?: CvWhereInput
+    none?: CvWhereInput
+  }
+
   export type TaskOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CvOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -3630,6 +5015,96 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type CvCountOrderByAggregateInput = {
+    id?: SortOrder
+    position?: SortOrder
+    full_name?: SortOrder
+    email?: SortOrder
+    phone_numbers?: SortOrder
+    about_your_self?: SortOrder
+    skills?: SortOrder
+    experience?: SortOrder
+    languages?: SortOrder
+    projects?: SortOrder
+    submitterId?: SortOrder
+  }
+
+  export type CvAvgOrderByAggregateInput = {
+    id?: SortOrder
+    submitterId?: SortOrder
+  }
+
+  export type CvMaxOrderByAggregateInput = {
+    id?: SortOrder
+    position?: SortOrder
+    full_name?: SortOrder
+    email?: SortOrder
+    phone_numbers?: SortOrder
+    about_your_self?: SortOrder
+    skills?: SortOrder
+    experience?: SortOrder
+    languages?: SortOrder
+    projects?: SortOrder
+    submitterId?: SortOrder
+  }
+
+  export type CvMinOrderByAggregateInput = {
+    id?: SortOrder
+    position?: SortOrder
+    full_name?: SortOrder
+    email?: SortOrder
+    phone_numbers?: SortOrder
+    about_your_self?: SortOrder
+    skills?: SortOrder
+    experience?: SortOrder
+    languages?: SortOrder
+    projects?: SortOrder
+    submitterId?: SortOrder
+  }
+
+  export type CvSumOrderByAggregateInput = {
+    id?: SortOrder
+    submitterId?: SortOrder
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type TaskCreateNestedManyWithoutSubmitterInput = {
     create?: XOR<TaskCreateWithoutSubmitterInput, TaskUncheckedCreateWithoutSubmitterInput> | TaskCreateWithoutSubmitterInput[] | TaskUncheckedCreateWithoutSubmitterInput[]
     connectOrCreate?: TaskCreateOrConnectWithoutSubmitterInput | TaskCreateOrConnectWithoutSubmitterInput[]
@@ -3644,6 +5119,13 @@ export namespace Prisma {
     connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
+  export type CvCreateNestedManyWithoutSubmitterInput = {
+    create?: XOR<CvCreateWithoutSubmitterInput, CvUncheckedCreateWithoutSubmitterInput> | CvCreateWithoutSubmitterInput[] | CvUncheckedCreateWithoutSubmitterInput[]
+    connectOrCreate?: CvCreateOrConnectWithoutSubmitterInput | CvCreateOrConnectWithoutSubmitterInput[]
+    createMany?: CvCreateManySubmitterInputEnvelope
+    connect?: CvWhereUniqueInput | CvWhereUniqueInput[]
+  }
+
   export type TaskUncheckedCreateNestedManyWithoutSubmitterInput = {
     create?: XOR<TaskCreateWithoutSubmitterInput, TaskUncheckedCreateWithoutSubmitterInput> | TaskCreateWithoutSubmitterInput[] | TaskUncheckedCreateWithoutSubmitterInput[]
     connectOrCreate?: TaskCreateOrConnectWithoutSubmitterInput | TaskCreateOrConnectWithoutSubmitterInput[]
@@ -3656,6 +5138,13 @@ export namespace Prisma {
     connectOrCreate?: TaskCreateOrConnectWithoutCustomerInput | TaskCreateOrConnectWithoutCustomerInput[]
     createMany?: TaskCreateManyCustomerInputEnvelope
     connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+  }
+
+  export type CvUncheckedCreateNestedManyWithoutSubmitterInput = {
+    create?: XOR<CvCreateWithoutSubmitterInput, CvUncheckedCreateWithoutSubmitterInput> | CvCreateWithoutSubmitterInput[] | CvUncheckedCreateWithoutSubmitterInput[]
+    connectOrCreate?: CvCreateOrConnectWithoutSubmitterInput | CvCreateOrConnectWithoutSubmitterInput[]
+    createMany?: CvCreateManySubmitterInputEnvelope
+    connect?: CvWhereUniqueInput | CvWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -3694,6 +5183,20 @@ export namespace Prisma {
     deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
+  export type CvUpdateManyWithoutSubmitterNestedInput = {
+    create?: XOR<CvCreateWithoutSubmitterInput, CvUncheckedCreateWithoutSubmitterInput> | CvCreateWithoutSubmitterInput[] | CvUncheckedCreateWithoutSubmitterInput[]
+    connectOrCreate?: CvCreateOrConnectWithoutSubmitterInput | CvCreateOrConnectWithoutSubmitterInput[]
+    upsert?: CvUpsertWithWhereUniqueWithoutSubmitterInput | CvUpsertWithWhereUniqueWithoutSubmitterInput[]
+    createMany?: CvCreateManySubmitterInputEnvelope
+    set?: CvWhereUniqueInput | CvWhereUniqueInput[]
+    disconnect?: CvWhereUniqueInput | CvWhereUniqueInput[]
+    delete?: CvWhereUniqueInput | CvWhereUniqueInput[]
+    connect?: CvWhereUniqueInput | CvWhereUniqueInput[]
+    update?: CvUpdateWithWhereUniqueWithoutSubmitterInput | CvUpdateWithWhereUniqueWithoutSubmitterInput[]
+    updateMany?: CvUpdateManyWithWhereWithoutSubmitterInput | CvUpdateManyWithWhereWithoutSubmitterInput[]
+    deleteMany?: CvScalarWhereInput | CvScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -3730,6 +5233,20 @@ export namespace Prisma {
     deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
+  export type CvUncheckedUpdateManyWithoutSubmitterNestedInput = {
+    create?: XOR<CvCreateWithoutSubmitterInput, CvUncheckedCreateWithoutSubmitterInput> | CvCreateWithoutSubmitterInput[] | CvUncheckedCreateWithoutSubmitterInput[]
+    connectOrCreate?: CvCreateOrConnectWithoutSubmitterInput | CvCreateOrConnectWithoutSubmitterInput[]
+    upsert?: CvUpsertWithWhereUniqueWithoutSubmitterInput | CvUpsertWithWhereUniqueWithoutSubmitterInput[]
+    createMany?: CvCreateManySubmitterInputEnvelope
+    set?: CvWhereUniqueInput | CvWhereUniqueInput[]
+    disconnect?: CvWhereUniqueInput | CvWhereUniqueInput[]
+    delete?: CvWhereUniqueInput | CvWhereUniqueInput[]
+    connect?: CvWhereUniqueInput | CvWhereUniqueInput[]
+    update?: CvUpdateWithWhereUniqueWithoutSubmitterInput | CvUpdateWithWhereUniqueWithoutSubmitterInput[]
+    updateMany?: CvUpdateManyWithWhereWithoutSubmitterInput | CvUpdateManyWithWhereWithoutSubmitterInput[]
+    deleteMany?: CvScalarWhereInput | CvScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutTasksInput = {
     create?: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
     connectOrCreate?: UserCreateOrConnectWithoutTasksInput
@@ -3764,6 +5281,24 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutAssignedTasksInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAssignedTasksInput, UserUpdateWithoutAssignedTasksInput>, UserUncheckedUpdateWithoutAssignedTasksInput>
+  }
+
+  export type UserCreateNestedOneWithoutCvsInput = {
+    create?: XOR<UserCreateWithoutCvsInput, UserUncheckedCreateWithoutCvsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCvsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type UserUpdateOneRequiredWithoutCvsNestedInput = {
+    create?: XOR<UserCreateWithoutCvsInput, UserUncheckedCreateWithoutCvsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCvsInput
+    upsert?: UserUpsertWithoutCvsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCvsInput, UserUpdateWithoutCvsInput>, UserUncheckedUpdateWithoutCvsInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -3890,6 +5425,48 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type TaskCreateWithoutSubmitterInput = {
     title: string
     description: string
@@ -3948,6 +5525,41 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CvCreateWithoutSubmitterInput = {
+    position: string
+    full_name: string
+    email: string
+    phone_numbers?: string | null
+    about_your_self?: string | null
+    skills: string
+    experience?: string | null
+    languages: string
+    projects?: string | null
+  }
+
+  export type CvUncheckedCreateWithoutSubmitterInput = {
+    id?: number
+    position: string
+    full_name: string
+    email: string
+    phone_numbers?: string | null
+    about_your_self?: string | null
+    skills: string
+    experience?: string | null
+    languages: string
+    projects?: string | null
+  }
+
+  export type CvCreateOrConnectWithoutSubmitterInput = {
+    where: CvWhereUniqueInput
+    create: XOR<CvCreateWithoutSubmitterInput, CvUncheckedCreateWithoutSubmitterInput>
+  }
+
+  export type CvCreateManySubmitterInputEnvelope = {
+    data: CvCreateManySubmitterInput | CvCreateManySubmitterInput[]
+    skipDuplicates?: boolean
+  }
+
   export type TaskUpsertWithWhereUniqueWithoutSubmitterInput = {
     where: TaskWhereUniqueInput
     update: XOR<TaskUpdateWithoutSubmitterInput, TaskUncheckedUpdateWithoutSubmitterInput>
@@ -3994,11 +5606,45 @@ export namespace Prisma {
     data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyWithoutCustomerInput>
   }
 
+  export type CvUpsertWithWhereUniqueWithoutSubmitterInput = {
+    where: CvWhereUniqueInput
+    update: XOR<CvUpdateWithoutSubmitterInput, CvUncheckedUpdateWithoutSubmitterInput>
+    create: XOR<CvCreateWithoutSubmitterInput, CvUncheckedCreateWithoutSubmitterInput>
+  }
+
+  export type CvUpdateWithWhereUniqueWithoutSubmitterInput = {
+    where: CvWhereUniqueInput
+    data: XOR<CvUpdateWithoutSubmitterInput, CvUncheckedUpdateWithoutSubmitterInput>
+  }
+
+  export type CvUpdateManyWithWhereWithoutSubmitterInput = {
+    where: CvScalarWhereInput
+    data: XOR<CvUpdateManyMutationInput, CvUncheckedUpdateManyWithoutSubmitterInput>
+  }
+
+  export type CvScalarWhereInput = {
+    AND?: CvScalarWhereInput | CvScalarWhereInput[]
+    OR?: CvScalarWhereInput[]
+    NOT?: CvScalarWhereInput | CvScalarWhereInput[]
+    id?: IntFilter<"Cv"> | number
+    position?: StringFilter<"Cv"> | string
+    full_name?: StringFilter<"Cv"> | string
+    email?: StringFilter<"Cv"> | string
+    phone_numbers?: StringNullableFilter<"Cv"> | string | null
+    about_your_self?: StringNullableFilter<"Cv"> | string | null
+    skills?: StringFilter<"Cv"> | string
+    experience?: StringNullableFilter<"Cv"> | string | null
+    languages?: StringFilter<"Cv"> | string
+    projects?: StringNullableFilter<"Cv"> | string | null
+    submitterId?: IntFilter<"Cv"> | number
+  }
+
   export type UserCreateWithoutTasksInput = {
     email: string
     password: string
     role: $Enums.UserRoles
     assignedTasks?: TaskCreateNestedManyWithoutCustomerInput
+    cvs?: CvCreateNestedManyWithoutSubmitterInput
   }
 
   export type UserUncheckedCreateWithoutTasksInput = {
@@ -4007,6 +5653,7 @@ export namespace Prisma {
     password: string
     role: $Enums.UserRoles
     assignedTasks?: TaskUncheckedCreateNestedManyWithoutCustomerInput
+    cvs?: CvUncheckedCreateNestedManyWithoutSubmitterInput
   }
 
   export type UserCreateOrConnectWithoutTasksInput = {
@@ -4019,6 +5666,7 @@ export namespace Prisma {
     password: string
     role: $Enums.UserRoles
     tasks?: TaskCreateNestedManyWithoutSubmitterInput
+    cvs?: CvCreateNestedManyWithoutSubmitterInput
   }
 
   export type UserUncheckedCreateWithoutAssignedTasksInput = {
@@ -4027,6 +5675,7 @@ export namespace Prisma {
     password: string
     role: $Enums.UserRoles
     tasks?: TaskUncheckedCreateNestedManyWithoutSubmitterInput
+    cvs?: CvUncheckedCreateNestedManyWithoutSubmitterInput
   }
 
   export type UserCreateOrConnectWithoutAssignedTasksInput = {
@@ -4050,6 +5699,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
     assignedTasks?: TaskUpdateManyWithoutCustomerNestedInput
+    cvs?: CvUpdateManyWithoutSubmitterNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTasksInput = {
@@ -4058,6 +5708,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
     assignedTasks?: TaskUncheckedUpdateManyWithoutCustomerNestedInput
+    cvs?: CvUncheckedUpdateManyWithoutSubmitterNestedInput
   }
 
   export type UserUpsertWithoutAssignedTasksInput = {
@@ -4076,6 +5727,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
     tasks?: TaskUpdateManyWithoutSubmitterNestedInput
+    cvs?: CvUpdateManyWithoutSubmitterNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssignedTasksInput = {
@@ -4084,6 +5736,57 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
     tasks?: TaskUncheckedUpdateManyWithoutSubmitterNestedInput
+    cvs?: CvUncheckedUpdateManyWithoutSubmitterNestedInput
+  }
+
+  export type UserCreateWithoutCvsInput = {
+    email: string
+    password: string
+    role: $Enums.UserRoles
+    tasks?: TaskCreateNestedManyWithoutSubmitterInput
+    assignedTasks?: TaskCreateNestedManyWithoutCustomerInput
+  }
+
+  export type UserUncheckedCreateWithoutCvsInput = {
+    id?: number
+    email: string
+    password: string
+    role: $Enums.UserRoles
+    tasks?: TaskUncheckedCreateNestedManyWithoutSubmitterInput
+    assignedTasks?: TaskUncheckedCreateNestedManyWithoutCustomerInput
+  }
+
+  export type UserCreateOrConnectWithoutCvsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCvsInput, UserUncheckedCreateWithoutCvsInput>
+  }
+
+  export type UserUpsertWithoutCvsInput = {
+    update: XOR<UserUpdateWithoutCvsInput, UserUncheckedUpdateWithoutCvsInput>
+    create: XOR<UserCreateWithoutCvsInput, UserUncheckedCreateWithoutCvsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCvsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCvsInput, UserUncheckedUpdateWithoutCvsInput>
+  }
+
+  export type UserUpdateWithoutCvsInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
+    tasks?: TaskUpdateManyWithoutSubmitterNestedInput
+    assignedTasks?: TaskUpdateManyWithoutCustomerNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCvsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
+    tasks?: TaskUncheckedUpdateManyWithoutSubmitterNestedInput
+    assignedTasks?: TaskUncheckedUpdateManyWithoutCustomerNestedInput
   }
 
   export type TaskCreateManySubmitterInput = {
@@ -4104,6 +5807,19 @@ export namespace Prisma {
     completed?: boolean
     confirmCustomer?: boolean
     submitterId: number
+  }
+
+  export type CvCreateManySubmitterInput = {
+    id?: number
+    position: string
+    full_name: string
+    email: string
+    phone_numbers?: string | null
+    about_your_self?: string | null
+    skills: string
+    experience?: string | null
+    languages: string
+    projects?: string | null
   }
 
   export type TaskUpdateWithoutSubmitterInput = {
@@ -4164,6 +5880,44 @@ export namespace Prisma {
     submitterId?: IntFieldUpdateOperationsInput | number
   }
 
+  export type CvUpdateWithoutSubmitterInput = {
+    position?: StringFieldUpdateOperationsInput | string
+    full_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone_numbers?: NullableStringFieldUpdateOperationsInput | string | null
+    about_your_self?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: StringFieldUpdateOperationsInput | string
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    languages?: StringFieldUpdateOperationsInput | string
+    projects?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CvUncheckedUpdateWithoutSubmitterInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    position?: StringFieldUpdateOperationsInput | string
+    full_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone_numbers?: NullableStringFieldUpdateOperationsInput | string | null
+    about_your_self?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: StringFieldUpdateOperationsInput | string
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    languages?: StringFieldUpdateOperationsInput | string
+    projects?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CvUncheckedUpdateManyWithoutSubmitterInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    position?: StringFieldUpdateOperationsInput | string
+    full_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone_numbers?: NullableStringFieldUpdateOperationsInput | string | null
+    about_your_self?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: StringFieldUpdateOperationsInput | string
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    languages?: StringFieldUpdateOperationsInput | string
+    projects?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
 
 
   /**
@@ -4181,6 +5935,10 @@ export namespace Prisma {
      * @deprecated Use TaskDefaultArgs instead
      */
     export type TaskArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TaskDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use CvDefaultArgs instead
+     */
+    export type CvArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CvDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

@@ -12,12 +12,12 @@ export class CvService {
   async createCv(submitterId: number, createCvDto: CreateCvDto): Promise<CvEntity> {
     const cvClean = this.prepareCvCreateObject(createCvDto);
 
-    const cvBySubmitterId = await this.cvRepository.findCvBySubmitterId(String(submitterId));
+    const cvBySubmitterId = await this.cvRepository.findCvBySubmitterId(submitterId);
     if(cvBySubmitterId) {
       throw new HttpException('CV has already created', HttpStatus.UNPROCESSABLE_ENTITY);
     } 
 
-    const cv = await this.cvRepository.createCv(String(submitterId), cvClean);
+    const cv = await this.cvRepository.createCv(submitterId, cvClean);
     if (!cv) {
       throw new HttpException('Either repeat your request or repeat it later', HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -35,7 +35,7 @@ export class CvService {
   }
 
   async getCvBySubmitterId(submitterId: number): Promise<CvEntity>{
-    const cv = await this.cvRepository.findCvBySubmitterId(String(submitterId));
+    const cv = await this.cvRepository.findCvBySubmitterId(submitterId);
     if(!cv) {
       throw new HttpException('Either repeat your request or repeat it later', HttpStatus.INTERNAL_SERVER_ERROR);
     }

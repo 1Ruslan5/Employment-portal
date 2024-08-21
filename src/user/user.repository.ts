@@ -1,4 +1,4 @@
-import { PostgreSqlPrismaService } from '@app/prisma/prisma.mongo.service';
+import { PostgreSqlPrismaService } from '@app/prisma/prisma.postgres.service';
 import { Injectable } from '@nestjs/common';
 import { UserCreateDto } from './dto/userCreate.dto';
 import { UserRoles } from './types/userRoles.type';

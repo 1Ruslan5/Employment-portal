@@ -137,6 +137,20 @@ exports.Prisma.TaskScalarFieldEnum = {
   customerId: 'customerId'
 };
 
+exports.Prisma.CvScalarFieldEnum = {
+  id: 'id',
+  position: 'position',
+  full_name: 'full_name',
+  email: 'email',
+  phone_numbers: 'phone_numbers',
+  about_your_self: 'about_your_self',
+  skills: 'skills',
+  experience: 'experience',
+  languages: 'languages',
+  projects: 'projects',
+  submitterId: 'submitterId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -146,6 +160,11 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
 exports.UserRoles = exports.$Enums.UserRoles = {
   SUBMITTER: 'SUBMITTER',
   CUSTOMER: 'CUSTOMER'
@@ -153,7 +172,8 @@ exports.UserRoles = exports.$Enums.UserRoles = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Task: 'Task'
+  Task: 'Task',
+  Cv: 'Cv'
 };
 
 /**

@@ -1,9 +1,8 @@
-import { cv } from "@prisma/client";
+import { Cv } from "@client/Postgres/generated.clientPostgres";
 
 
-export class CvEntity implements cv {
-  id: string;
-  user_id: string;
+export class CvEntity implements Cv {
+  id: number;
   position: string;
   full_name: string;
   email: string;
@@ -13,4 +12,5 @@ export class CvEntity implements cv {
   experience: string | null;
   languages: string;
   projects: string | null;
+  submitterId: number;
 }

@@ -1,5 +1,4 @@
-
-import { PostgreSqlPrismaService } from "@app/prisma/prisma.mongo.service";
+import { PostgreSqlPrismaService } from "@app/prisma/prisma.postgres.service";
 import { Injectable } from "@nestjs/common";
 import { CreateTaskDto } from "./dto/createTask.dto";
 import { TaskEntity } from "./task.entity";

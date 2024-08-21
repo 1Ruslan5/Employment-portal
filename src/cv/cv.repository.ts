@@ -1,40 +1,40 @@
-import { MongoPrismaService } from "@app/prisma/prisma.postgres.service";
 import { Injectable } from "@nestjs/common";
 import { CvEntity } from "./cv.entity";
 import { CreateCvDto } from "./dto/createCv.dto";
 import { UpdateCvDto } from "./dto/updateCv.dto";
+import { PostgreSqlPrismaService } from "@app/prisma/prisma.postgres.service";
 
 
 @Injectable()
 export class CvRepository {
-  constructor(private prisma: MongoPrismaService) {}
+  constructor(private prisma: PostgreSqlPrismaService) {}
 
   async createCv(
-    user_id: string,
+    submitterId: number,
     createCvDto: CreateCvDto,
     prisma = this.prisma
   ): Promise<CvEntity> {
     return await prisma.cv.create({
       data: {
-        user_id,
+        submitterId,
         ...createCvDto
       }
     });
   }
 
   async findCvBySubmitterId(
-    user_id: string, 
+    submitterId: number, 
     prisma = this.prisma
   ): Promise<CvEntity> {
     return await prisma.cv.findFirst({
       where: {
-        user_id,
+        submitterId,
       },
     });
   }
 
   async updateCv(
-    cvId: string,
+    cvId: number,
     updateCv: UpdateCvDto,
     prisma = this.prisma
   ): Promise<CvEntity> {
